@@ -20,7 +20,8 @@ const propTypes = {
   children: PropTypes.node,
   label: PropTypes.string,
   valuenow: PropTypes.string,
-  valuetext: PropTypes.string
+  valuetext: PropTypes.string,
+  document: PropTypes.object
 };
 
 export default class Slider extends Component {
@@ -46,6 +47,7 @@ export default class Slider extends Component {
   }
 
   componentWillUnmount() {
+    const { document } = this.props;
     document.removeEventListener('mousemove', this.handleMouseMove, true);
     document.removeEventListener('mouseup', this.handleMouseUp, true);
     document.removeEventListener('touchmove', this.handleMouseMove, true);
@@ -71,7 +73,7 @@ export default class Slider extends Component {
     const { onMouseDown } = this.props;
     // event.preventDefault();
     // event.stopPropagation();
-
+    const { document } = this.props;
     document.addEventListener('mousemove', this.handleMouseMove, true);
     document.addEventListener('mouseup', this.handleMouseUp, true);
     document.addEventListener('touchmove', this.handleMouseMove, true);
@@ -106,7 +108,7 @@ export default class Slider extends Component {
     // calling preventDefault (at touchend phase) will prevent the mouseup event
     event.preventDefault();
     const { onMouseUp } = this.props;
-
+    const { document } = this.props;
     document.removeEventListener('mousemove', this.handleMouseMove, true);
     document.removeEventListener('mouseup', this.handleMouseUp, true);
     document.removeEventListener('touchmove', this.handleMouseMove, true);
@@ -126,6 +128,7 @@ export default class Slider extends Component {
   }
 
   handleFocus(e) {
+    const { document } = this.props;
     document.addEventListener('keydown', this.handleKeyPress, true);
     if (this.props.onFocus) {
       this.props.onFocus(e);
@@ -133,6 +136,7 @@ export default class Slider extends Component {
   }
 
   handleBlur(e) {
+    const { document } = this.props;
     document.removeEventListener('keydown', this.handleKeyPress, true);
     if (this.props.onBlur) {
       this.props.onBlur(e);
@@ -228,3 +232,7 @@ export default class Slider extends Component {
 
 Slider.propTypes = propTypes;
 Slider.displayName = 'Slider';
+
+Slider.defaultProps = {
+  document: window.document
+};
