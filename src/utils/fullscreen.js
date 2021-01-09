@@ -41,18 +41,18 @@ class Fullscreen {
     );
   }
 
-  addEventListener(handler) {
-    document.addEventListener('fullscreenchange', handler);
-    document.addEventListener('webkitfullscreenchange', handler);
-    document.addEventListener('mozfullscreenchange', handler);
-    document.addEventListener('MSFullscreenChange', handler);
+  addEventListener(handler, domRef) {
+    domRef.addEventListener('fullscreenchange', handler);
+    domRef.addEventListener('webkitfullscreenchange', handler);
+    domRef.addEventListener('mozfullscreenchange', handler);
+    domRef.addEventListener('MSFullscreenChange', handler);
   }
 
-  removeEventListener(handler) {
-    document.removeEventListener('fullscreenchange', handler);
-    document.removeEventListener('webkitfullscreenchange', handler);
-    document.removeEventListener('mozfullscreenchange', handler);
-    document.removeEventListener('MSFullscreenChange', handler);
+  removeEventListener(handler, domRef) {
+    domRef.removeEventListener('fullscreenchange', handler);
+    domRef.removeEventListener('webkitfullscreenchange', handler);
+    domRef.removeEventListener('mozfullscreenchange', handler);
+    domRef.removeEventListener('MSFullscreenChange', handler);
   }
 }
 

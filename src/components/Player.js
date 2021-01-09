@@ -93,19 +93,20 @@ export default class Player extends Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+    this.document = this.props.document || window.document;
   }
 
   componentDidMount() {
     this.handleResize();
     window.addEventListener('resize', this.handleResize);
 
-    fullscreen.addEventListener(this.handleFullScreenChange);
+    fullscreen.addEventListener(this.handleFullScreenChange, this.document);
   }
 
   componentWillUnmount() {
     // Remove event listener
     window.removeEventListener('resize', this.handleResize);
-    fullscreen.removeEventListener(this.handleFullScreenChange);
+    fullscreen.removeEventListener(this.handleFullScreenChange, this.document);
     if (this.controlsHideTimer) {
       window.clearTimeout(this.controlsHideTimer);
     }
@@ -128,7 +129,7 @@ export default class Player extends Component {
       <Bezel key="bezel" order={3.0} />,
       <BigPlayButton key="big-play-button" order={4.0} />,
       <ControlBar key="control-bar" order={5.0} />,
-      <Shortcut key="shortcut" order={99.0} />
+      <Shortcut key="shortcut" order={99.0} document={this.document} />
     ];
   }
 
@@ -396,7 +397,6 @@ export default class Player extends Component {
       video: this.video ? this.video.video : null
     };
     const children = this.getChildren(props);
-
     return (
       <div
         className={classNames(
