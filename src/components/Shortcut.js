@@ -9,13 +9,15 @@ const propTypes = {
   actions: PropTypes.object,
   player: PropTypes.object,
   shortcuts: PropTypes.array,
-  document: PropTypes.objectOf(PropTypes.object)
+  document: PropTypes.objectOf(PropTypes.object),
+  handleFullscreenFun: PropTypes.func
 };
 
 const defaultProps = {
   clickable: true,
   dblclickable: true,
-  document: window.document
+  document: window.document,
+  handleFullscreenFun: undefined
 };
 
 export default class Shortcut extends Component {
@@ -336,11 +338,24 @@ export default class Shortcut extends Component {
   }
 
   handleDoubleClick(e) {
-    const { player, actions, dblclickable, document } = this.props;
-    if (!this.canBeClicked(player, e) || !dblclickable) {
+    const {
+      player,
+      actions,
+      dblclickable,
+      document,
+      disabledFullscreen,
+      handleFullscreenFun
+    } = this.props;
+    if (!this.canBeClicked(player, e) || !dblclickable || disabledFullscreen) {
       return;
     }
-    this.toggleFullscreen(player, actions, document);
+
+    if (!handleFullscreenFun) {
+      this.toggleFullscreen(player, actions, document);
+    } else {
+      handleFullscreenFun(player, actions, document);
+    }
+
     // e.preventDefault();
   }
 
